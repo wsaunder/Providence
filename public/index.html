@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Providence</title>
+  <script type="text/javascript" src="js/HexagonTools.js"></script>
+  <script type="text/javascript" src="js/Grid.js"></script>
+  <script type="text/javascript" src="js/HexCalcs.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="js/logic.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript" src="js/notify.min.js"></script>
+  <style>
+    canvas {
+      border: 1px solid black;
+      width: 75%;
+      width:1000px;
+      height:600px
+    }
+    span {
+      padding: 20px;
+    }
+    button{
+      margin:10px;
+    }
+
+
+  </style>
+</head>
+<body>
+
+ <!-- <h3>Hex Based on Width and Height</h3>
+  Width:<br />
+  <input type="text" id="hexWidth" value="100.0" /><br />
+  Height:<br />
+  <input type="text" id="hexHeight" value="86.60254037844388" /><br />
+  <input type="button" onclick="getHexGridWH()" value="Draw Hex Grid by Width and Height"/>
+
+  <div id="hexStatus"></div>
+-->
+  <div>
+    <div><h3>Phase</h3>
+      <div><button onclick="Numbers()">Numbers</button>
+      <button onclick="Multiply()">Multiply</button>
+      <button onclick="">Go Forth</button>
+      <button onclick="">War</button></div>
+      <div id='phase'>Genesis</div><div><h2>Player<span id='player#'>1</span></h2></div></div>
+  <div><button onclick="setLand('Mountain')" class="actionButton">Mountain</button>
+    <button onclick="setLand('Pasture')" class="actionButton">Pasture</button>
+    <button onclick="setLand('Forest')" class="actionButton">Forest</button>
+    <button onclick="setLand('Desert')" class="actionButton">Desert</button>
+    <button onclick="setLand('Hills')" class="actionButton">Hills</button>
+    <button onclick="setLand('Plains')" class="actionButton">Plains</button>
+  </div>
+  <br>
+  <div>Land Selected:</div><span id="landSelection"></span>
+  <div>
+    <button onclick="addMeeple(2)" class="actionButton">Add Follower</button>
+    <button onclick="addTemple(1)" class="actionButton">Add Temple</button>
+    <button onclick="nextTurn()" >Next Turn</button>
+    <button onclick="nextPlayer()" >Next Player</button>
+  </div>
+  </div>
+  <br>
+  <div><canvas id="hexCanvas" width="1000" height="600"  /> </div>
+
+  <div><h2>Resources</h2>
+    <div>
+      <span> Player 1</span>
+      <span> Food <span id="food1"></span></span>
+      <span> Stone <span id="stone1"></span></span>
+      <span> Metal <span id="metal1"></span></span>
+      <span> Mana <span id="mana1"></span></span>
+      <span> Tiles <span id="tile1"></span></span>
+    </div>
+    <div>
+      <span> Player 2</span>
+      <span> Food <span id="food2"></span></span>
+      <span> Stone <span id="stone2"></span></span>
+      <span> Metal <span id="metal2"></span></span>
+      <span> Mana <span id="mana2"></span></span>
+      <span> Tiles <span id="tile2"></span></span>
+    </div>
+  </div>
+
+  <script>
+
+
+
+
+
+
+
+  </script>
+</body>
+</html>
