@@ -76,7 +76,7 @@ HT.Grid = function(/*double*/ width, /*double*/ height) {
       var h1 = this.Hexes[i];
       for (var h2 in this.Hexes){
         var dist = this.GetHexDistance(h1,this.Hexes[h2]);
-        if (dist <= 1) {
+        if (dist <= 1 && h1.Id != this.Hexes[h2].Id) {
           h1.neighbors.push(this.Hexes[h2].Id);
         }
       }

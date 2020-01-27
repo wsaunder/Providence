@@ -4,6 +4,6 @@ const port = 3000
 
 
 app.use(express.static('public'))
-response.setHeader("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
+// response.setHeader("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
 
 app.listen(port, () => console.log(`Listening on port ${port}!`))

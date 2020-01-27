@@ -2,13 +2,16 @@
 <html>
 <head>
   <title>Providence</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script type="text/javascript" src="js/HexagonTools.js"></script>
   <script type="text/javascript" src="js/Grid.js"></script>
   <script type="text/javascript" src="js/HexCalcs.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
   <script type="text/javascript" src="js/logic.js"></script>
+  <script type="text/javascript" src="js/miracles.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script type="text/javascript" src="js/notify.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
     canvas {
       border: 1px solid black;
@@ -22,7 +25,10 @@
     button{
       margin:10px;
     }
-
+    .main{
+      padding:10px;
+      margin: 10px
+    }
 
   </style>
 </head>
@@ -37,28 +43,65 @@
 
   <div id="hexStatus"></div>
 -->
+<div class="main">
   <div>
-    <div><h3>Phase</h3>
-      <div><button onclick="Numbers()">Numbers</button>
-      <button onclick="Multiply()">Multiply</button>
-      <button onclick="">Go Forth</button>
-      <button onclick="">War</button></div>
-      <div id='phase'>Genesis</div><div><h2>Player<span id='player#'>1</span></h2></div></div>
-  <div><button onclick="setLand('Mountain')" class="actionButton">Mountain</button>
-    <button onclick="setLand('Pasture')" class="actionButton">Pasture</button>
-    <button onclick="setLand('Forest')" class="actionButton">Forest</button>
-    <button onclick="setLand('Desert')" class="actionButton">Desert</button>
-    <button onclick="setLand('Hills')" class="actionButton">Hills</button>
-    <button onclick="setLand('Plains')" class="actionButton">Plains</button>
-  </div>
-  <br>
-  <div>Land Selected:</div><span id="landSelection"></span>
-  <div>
-    <button onclick="addMeeple(2)" class="actionButton">Add Follower</button>
-    <button onclick="addTemple(1)" class="actionButton">Add Temple</button>
-    <button onclick="nextTurn()" >Next Turn</button>
-    <button onclick="nextPlayer()" >Next Player</button>
-  </div>
+    <div class="row">
+      <div class="col-6">
+        <h3>Phase</h3>
+        <div>
+          <button onclick="numbers()">Numbers</button>
+          <button onclick="multiply()">Multiply</button>
+          <button onclick="goForth()">Go Forth</button>
+          <button onclick="holyWar()">War</button>
+        </div>
+        <div>
+          <h4 id='phase'>Genesis</h4>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <h2>Player<span id='player#'>1</span></h2>
+          </div>
+          <div class="col-6">
+            <button onclick="addTile()">Add Tile</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <h3>Miracles</h3>
+        <button onclick="addTileMiracle()" id="addTileMiracle">Add a Tile </br>Cost:<span id="addTile">1</span></button>
+        <button onclick="changeTileMiracle()" id="changeTileMiracle">Change Tile </br>Cost:<span id="changeTile">1</span></button>
+        <button onclick="moveFollower()" id="moveMiracle">Move Followers </br>Cost:<span id="move">1</span></button>
+        <button onclick="foodMiracle()" id="foodMiracle">+1 Food </br>Cost:<span id="addFood">1</span></button>
+        <button onclick="stoneMiracle()" id="stoneMiracle">+1 Stone </br>Cost:<span id="addStone">1</span></button>
+        <button onclick="metalMiracle()" id="metalMiracle">+1 Metal </br>Cost:<span id="addMetal">1</span></button>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <button onclick="setLand('Mountain')" class="actionButton">Mountain</button>
+        <button onclick="setLand('Pasture')" class="actionButton">Pasture</button>
+        <button onclick="setLand('Forest')" class="actionButton">Forest</button>
+        <button onclick="setLand('Desert')" class="actionButton">Desert</button>
+        <button onclick="setLand('Hills')" class="actionButton">Hills</button>
+        <button onclick="setLand('Plains')" class="actionButton">Plains</button>
+      </div>
+    </div>
+      <br>
+      <div>Land Selected:</div><span id="landSelection"></span>
+    <div class="row">
+      <div class="col-8">
+        <button onclick="addMeeple(2)" class="actionButton">Add Follower</button>
+        <button onclick="addTemple(1)" class="actionButton">Add Temple</button>
+        <button onclick="nextTurn()" >Next Turn</button>
+        <button onclick="nextPlayer()" >Next Player</button>
+      </div>
+      <div class="col-4">
+        <div class="input-group">
+          <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="5">
+          <button type="submit" onclick="movementCount()">Submit</button>
+        </div>
+      </div>
+    </div>
   </div>
   <br>
   <div><canvas id="hexCanvas" width="1000" height="600"  /> </div>
@@ -70,7 +113,6 @@
       <span> Stone <span id="stone1"></span></span>
       <span> Metal <span id="metal1"></span></span>
       <span> Mana <span id="mana1"></span></span>
-      <span> Tiles <span id="tile1"></span></span>
     </div>
     <div>
       <span> Player 2</span>
@@ -78,18 +120,12 @@
       <span> Stone <span id="stone2"></span></span>
       <span> Metal <span id="metal2"></span></span>
       <span> Mana <span id="mana2"></span></span>
-      <span> Tiles <span id="tile2"></span></span>
     </div>
   </div>
+</div>
+<div><TR></TR></div>
+<script>
 
-  <script>
-
-
-
-
-
-
-
-  </script>
+</script>
 </body>
 </html>

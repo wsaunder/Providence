@@ -58,31 +58,29 @@ HT.Hexagon = function(id, x, y) {
 		this.Points.push(new HT.Point(x, y1 + HT.Hexagon.Static.SIDE + y));
 		this.Points.push(new HT.Point(x, y1 + y));
 	}
-	
+
 	this.Id = id;
-	
+
 	this.x = x;
 	this.y = y;
 	this.x1 = x1;
 	this.y1 = y1;
-	
+
 	this.TopLeftPoint = new HT.Point(this.x, this.y);
 	this.BottomRightPoint = new HT.Point(this.x + HT.Hexagon.Static.WIDTH, this.y + HT.Hexagon.Static.HEIGHT);
 	this.MidPoint = new HT.Point(this.x + (HT.Hexagon.Static.WIDTH / 2), this.y + (HT.Hexagon.Static.HEIGHT / 2));
-	
+
 	this.P1 = new HT.Point(x + x1, y + y1);
-	
+
 	this.selected = false;
     this.neighbors = [];
     this.meeples = 0;
     this.temples = 0;
     this.land = null;
-    //this.food = 1;
-    //this.stone = 1;
-    //this.metal = 1;
+    this.pops=[];
     this.player = 0;
 };
-	
+
 /**
  * draws this Hexagon to the canvas
  * @this {HT.Hexagon}
@@ -104,7 +102,7 @@ HT.Hexagon.prototype.draw = function(ctx, color) {
 	ctx.stroke();
     ctx.fillStyle = color;
     ctx.fill();
-    
+
     if(color != "white") {
       ctx.fillStyle = "black"
       ctx.font = "bolder 6pt Trebuchet MS,Tahoma,Verdana,Arial,sans-serif";
@@ -127,7 +125,7 @@ HT.Hexagon.prototype.draw = function(ctx, color) {
       ctx.fillText("Temples " + this.temples, this.MidPoint.X, this.MidPoint.Y-15);
       ctx.fillText("Player " + this.player, this.MidPoint.X, this.MidPoint.Y);
     }
-	
+
 	//if(this.Id)
 	//{
 	//	//draw text for debugging
@@ -156,7 +154,7 @@ HT.Hexagon.prototype.draw = function(ctx, color) {
 //        //var textWidth = ctx.measureText(this.Planet.BoundingHex.Id);
 //        ctx.fillText("Temples " + this.temples, this.MidPoint.X, this.MidPoint.Y-15);
 //      }
-	
+
 //	if(this.PathCoOrdX !== null && this.PathCoOrdY !== null && typeof(this.PathCoOrdX) != "undefined" && typeof(this.PathCoOrdY) != "undefined")
 //	{
 //		//draw co-ordinates for debugging
@@ -167,7 +165,7 @@ HT.Hexagon.prototype.draw = function(ctx, color) {
 //		//var textWidth = ctx.measureText(this.Planet.BoundingHex.Id);
 //		ctx.fillText("("+this.PathCoOrdX+","+this.PathCoOrdY+")", this.MidPoint.X, this.MidPoint.Y + 10);
 //	}
-	
+
 	if(HT.Hexagon.Static.DRAWSTATS)
 	{
 		ctx.strokeStyle = "black";
@@ -179,7 +177,7 @@ HT.Hexagon.prototype.draw = function(ctx, color) {
 		ctx.lineTo(this.x, this.P1.Y);
 		ctx.closePath();
 		ctx.stroke();
-		
+
 		ctx.fillStyle = "black"
 		ctx.font = "bolder 8pt Trebuchet MS,Tahoma,Verdana,Arial,sans-serif";
 		ctx.textAlign = "left";
@@ -201,7 +199,7 @@ HT.Hexagon.prototype.draw = function(ctx, color) {
 HT.Hexagon.prototype.isInBounds = function(x, y) {
 	return this.Contains(new HT.Point(x, y));
 };
-	
+
 
 /**
  * Returns true if the point is inside this hexagon, it is a quick contains
@@ -265,7 +263,7 @@ HT.Hexagon.prototype.distanceFromMidPoint = function(/*Point*/ p) {
 	var deltaX = this.MidPoint.X - p.X;
 	var deltaY = this.MidPoint.Y - p.Y;
 
-	// squaring so don't need to worry about square-rooting a negative number 
+	// squaring so don't need to worry about square-rooting a negative number
 	return Math.sqrt( (deltaX * deltaX) + (deltaY * deltaY) );
 };
 
@@ -279,5 +277,3 @@ HT.Hexagon.Static = {HEIGHT:91.14378277661477
 					, SIDE:50.0
 					, ORIENTATION:HT.Hexagon.Orientation.Normal
 					, DRAWSTATS: false};//hexagons will have 25 unit sides for now
-
-
